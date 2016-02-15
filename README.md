@@ -2,8 +2,8 @@
 
 Set timer using command line:
 
-    # 30 minutes
-    countdown_timer.1s.rb 30m
+    # Do research for 30 minutes
+    countdown_timer.1s.rb 30m Do research
 
     # 3 hours
     countdown_timer.1s.rb 3h

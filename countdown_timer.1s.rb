@@ -12,8 +12,13 @@
 fn = File.join(File.dirname($0), '.countdown')
 
 if ARGV.count == 0
+  task = nil
+
   if File.file?(fn)
-    time = Time.at(File.read(fn).to_i)
+    lines = File.read(fn).lines
+
+    time = Time.at(lines.first.to_i)
+    task = lines[1] if lines.count > 1
   else
     time = Time.at(0)
   end
@@ -23,9 +28,9 @@ if ARGV.count == 0
 
   color = nil
 
-  if remain < 15 * 60
+  if remain < 15 * 60 && remain != 0
     color = "red"
-  elsif remain < 30 * 60
+  elsif remain < 30 * 60 && remain != 0
     color = "orange"
   end
 
@@ -37,12 +42,16 @@ if ARGV.count == 0
 
   s = remain
 
-  str = "%02i:%02i:%02i" % [h, m, s]
+  str = ""
+  str << "#{task}: " if task
+  str << "%02i:%02i:%02i" % [h, m, s]
   str << "| color=#{color}" if color
 
   puts str
 else
   case ARGV.first
+  when '0'
+    time = 0
   when /^(\d+)s$/
     time = Time.now + $1.to_i
   when /^(\d+)m$/
@@ -54,7 +63,13 @@ else
     exit 1
   end
 
-  File.write(fn, time.to_i)
+  str = ""
+  str << time.to_i.to_s
+
+  if ARGV.count > 1
+    str << "\n"
+    str << ARGV.drop(1).join(' ')
+  end
+
+  File.write(fn, str)
 end
-
-
