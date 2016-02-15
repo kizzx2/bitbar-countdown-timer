@@ -6,6 +6,7 @@
 # <bitbar.desc>Simple countdown timer</bitbar.desc>
 # <bitbar.image>http://www.hosted-somewhere/pluginimage</bitbar.image>
 # <bitbar.dependencies>ruby</bitbar.dependencies>
+# <bitbar.image>https://raw.githubusercontent.com/kizzx2/bitbar-countdown-timer/master/screenshot.png</bitbar.image>
 # <bitbar.abouturl>http://github.com/kizzx2/bitbar-countdown-timer</bitbar.abouturl>
 
 fn = File.join(File.dirname($0), '.countdown')
@@ -55,3 +56,5 @@ else
 
   File.write(fn, time.to_i)
 end
+
+
