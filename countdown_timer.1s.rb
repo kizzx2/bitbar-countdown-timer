@@ -3,7 +3,7 @@
 # <bitbar.version>v1.0</bitbar.version>
 # <bitbar.author>Chris Yuen</bitbar.author>
 # <bitbar.author.github>kizzx2</bitbar.author.github>
-# <bitbar.desc>Simple countdown timer</bitbar.desc>
+# <bitbar.desc>Simple countdown timer. Set the time by calling the script from terminal.</bitbar.desc>
 # <bitbar.image>http://www.hosted-somewhere/pluginimage</bitbar.image>
 # <bitbar.dependencies>ruby</bitbar.dependencies>
 # <bitbar.image>https://raw.githubusercontent.com/kizzx2/bitbar-countdown-timer/master/screenshot.png</bitbar.image>
