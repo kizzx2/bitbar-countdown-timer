@@ -49,19 +49,33 @@ if ARGV.count == 0
 
   puts str
 else
-  case ARGV.first
-  when '0'
-    time = 0
-  when /^(\d+)s$/
-    time = Time.now + $1.to_i
-  when /^(\d+)m$/
-    time = Time.now + $1.to_i * 60
-  when /^(\d+)h$/
-    time = Time.now + $1.to_i * 3600
-  else
-    puts "Error: Invalid argument '#{ARGV.first}'"
-    exit 1
+
+  arg = ARGV.shift || ''
+  time = 0
+
+  if weeks = arg.scan(/\d+w/)[0]
+    time += weeks.rstrip.to_i * (7 * 24 * 60 * 60)
   end
+
+  if days = arg.scan(/\d+d/)[0]
+    time += days.rstrip.to_i * (24 * 60 * 60)
+  end
+
+  if hours = arg.scan(/\d+h/)[0]
+    time += hours.rstrip.to_i * (60 * 60)
+  end
+
+  if minutes = arg.scan(/\d+m/)[0]
+    time += minutes.rstrip.to_i * 60
+  end
+
+  if seconds = arg.scan(/\d+s/)[0] || arg.scan(/\d+$/)[0]
+    time += seconds.rstrip.to_i
+  end
+
+  time += Time.now.to_i if time > 0
+
+  abort "Error: Invalid argument '#{arg}'" if arg !~ /^(\d+[smhdw]?)+$/
 
   str = ""
   str << time.to_i.to_s
