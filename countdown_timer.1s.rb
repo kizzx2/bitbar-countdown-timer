@@ -34,6 +34,15 @@ if ARGV.count == 0
     color = "orange"
   end
 
+  years = (remain / (3600 * 24 * 365)).to_i
+  remain -= years * 3600 * 24 * 365
+
+  mon = (remain / (3600 * 24 * 30)).to_i
+  remain -= mon * 3600 * 24 * 30
+
+  d = (remain / (3600 * 24)).to_i
+  remain -= d * 3600 * 24
+
   h = (remain / 3600).to_i
   remain -= h * 3600
 
@@ -44,7 +53,27 @@ if ARGV.count == 0
 
   str = ""
   str << "#{task}: " if task
-  str << "%02i:%02i:%02i" % [h, m, s]
+  base = "%02i:%02i:%02i"
+  invar = Array.new
+
+  if d != 0 || mon > 0 then
+    base = "%02i D " + base
+    invar.unshift(d)
+  end
+
+  if mon != 0 || years > 0 then
+    base = "%02i M " + base
+    invar.unshift(mon)
+  end
+
+  if years != 0 then
+    base = "%02i Y " + base
+    invar.unshift(years)
+  end
+
+  invar.push(h,m,s)
+
+  str << base % invar
   str << "| color=#{color}" if color
 
   puts str
@@ -58,6 +87,12 @@ else
     time = Time.now + $1.to_i * 60
   when /^(\d+)h$/
     time = Time.now + $1.to_i * 3600
+  when /^(\d+)d$/
+    time = Time.now + $1.to_i * 3600 * 24
+  when /^(\d+)y$/
+    time = Time.now + $1.to_i * 3600 * 24 * 365
+  when /^(\d+)t$/
+    time = $1.to_i
   else
     puts "Error: Invalid argument '#{ARGV.first}'"
     exit 1
