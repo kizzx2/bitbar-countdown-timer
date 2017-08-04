@@ -40,6 +40,11 @@ if ARGV.count == 0
   mon = (remain / (3600 * 24 * 30)).to_i
   remain -= mon * 3600 * 24 * 30
 
+  if mon == 12 then
+    years += 1
+    mon = 0
+  end
+
   d = (remain / (3600 * 24)).to_i
   remain -= d * 3600 * 24
 
@@ -56,12 +61,12 @@ if ARGV.count == 0
   base = "%02i:%02i:%02i"
   invar = Array.new
 
-  if d != 0 || mon > 0 then
+  if d != 0 then
     base = "%02i D " + base
     invar.unshift(d)
   end
 
-  if mon != 0 || years > 0 then
+  if mon != 0 then
     base = "%02i M " + base
     invar.unshift(mon)
   end
